@@ -20,17 +20,16 @@ int prompt(const char *line, int readed)
 	}
 	strcpy(word, line);
 
-	if (readed < 0/* || strcmp(line, "exit\n") == 0*/)
+	if (readed < 0 || strcmp(line, "exit\n") == 0)
 		return (lsh_exit());
 
 	if (strcmp(line, "help\n") == 0)
 		return (lsh_help());
-/*
-*	if (strncmp(word, "cd", 2) == 0)
-*		return (lsh_cd(word));
-*/
-	return (_which(word));
 
+	if (strncmp(word, "cd", 2) == 0)
+		return (lsh_cd(word));
+
+	return (_which(word));
 }
 
 /**
@@ -43,30 +42,34 @@ int prompt(const char *line, int readed)
 
 int _which(char *line)
 {
-	/*struct stat st;*/
+	struct stat st;
 	char cpline[1048576];
 
 	strcpy(cpline, line);
 
 	char *adr = strtok(cpline, "\n");
 	char *cm = strtok(adr, " ");
-/*
-*	char *PATH = _getenv("PATH");
-*	char *dir = strtok(PATH, ":");
-*
-*	char *cpdir = malloc(1024);
-*	if (!cpdir)
-*	{
-*		free(PATH);
-*		return (-1);
-*	}
-*	do
-*	{
-*		strcpy(cpdir, dir);
-*		strcat(cpdir, "/");
-*		strcat(cpdir, cm);
-*		dir = strtok(NULL, ":");
-*	} while (stat(cpdir, &st) != 0 && dir != NULL);
-*/
-	return (_exec(cm, line));
+
+	char *PATH = _getenv("PATH");
+	char *dir = strtok(PATH, ":");
+
+	char *cpdir = malloc(1024);
+
+	if (!cpdir)
+	{
+		free(PATH);
+		return (1);
+	}
+
+	do {
+		strcpy(cpdir, dir);
+		strcat(cpdir, "/");
+		strcat(cpdir, cm);
+		dir = strtok(NULL, ":");
+	} while (stat(cpdir, &st) != 0 && dir != NULL);
+
+	if (stat(cpdir, &st) != 0)
+		return (_exec(cm, line));
+	else
+		return (_exec(cpdir, line));
 }

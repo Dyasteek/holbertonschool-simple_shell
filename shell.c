@@ -14,10 +14,6 @@ int main(void)
 	int res;
 	size_t len = 0;
 
-	buf = malloc(len);
-	if (!buf)
-		return (-1);
-
 	while (1)
 	{
 		printf("#cisfun$ ");

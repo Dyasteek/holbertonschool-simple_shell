@@ -7,7 +7,7 @@
  * @line: line whith content all arguments
  *
  * Return:
- *      - -1 an error
+ *      - 1 an error
  *      - 0 success
  *      - command not found
 */
@@ -16,31 +16,29 @@ int _exec(char *cm, char *line)
 {
 	struct stat st;
 	pid_t child;
-	int status, i = 1;
+	int status, i = 0;
 	char cpline[1048576], *command, *token, *arg[1024];
 
 	strcpy(cpline, line);
 	token = strtok(cpline, "\n");
 	command = strtok(token, " ");
 
-	arg[0] = command;
+	arg[0] = cm;
 
-	/*
-	*while (command != NULL)
-	*{
-	*	arg[i] = command;
-	*	command = strtok(NULL, " ");
-	*	i++;
-	*}
-	*/
+	while (command != NULL)
+	{
+		command = strtok(NULL, " ");
+		arg[1] = command;
+		i++;
+	}
 
-	if (stat(cm, &st) == 0)
+	if (stat(arg[0], &st) == 0)
 	{
 		child = fork();
 		if (child == -1)
 		{
 			perror("Error process");
-			return (-1);
+			return (1);
 		}
 		if (child == 0)
 		{
