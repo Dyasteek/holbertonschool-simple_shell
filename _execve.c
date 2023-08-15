@@ -7,10 +7,10 @@ int _exec(char *cm, char *line)
     struct stat st;
     pid_t child;
     int status, i = 0;
-    char cpline[1048576], *command, *arg[1024];
+    char cpline[1048576], *command, *token, *arg[1024];
 
     strcpy(cpline, line);
-    char *token = strtok(cpline, "\n");
+    token = strtok(cpline, "\n");
     command = strtok(token, " ");
 
     while (command != NULL)

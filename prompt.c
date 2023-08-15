@@ -30,6 +30,7 @@ int _which(char *line)
     char cpline[1048576];
 
     strcpy(cpline, line);
+
     char *adr = strtok(cpline, "\n");
     char *cm = strtok(adr, " ");
 /*
@@ -72,11 +73,10 @@ int lsh_cd(char *line)
 {
     char *arg = strtok(line, "\n");
     char *args = strtok(arg, " ");
+
     args = strtok(NULL, " ");
     if (args == NULL)
-    {
         fprintf(stderr, "shell: expected argument to \"cd\"\n");
-    }
     else
     {
         if (chdir(args) != 0)

@@ -5,7 +5,7 @@
 char *_getenv(const char *name)
 {
     char **env = environ;
-    char *res, dir[strlen(name)];
+    char *res, *en, *tok, dir[strlen(name)];
     unsigned int i = 0;
 
     strcpy(dir, name);
@@ -16,12 +16,11 @@ char *_getenv(const char *name)
 
     if (env[i] != NULL)
     {
-        char *en;
         en = malloc(strlen(env[i]));
-        if(!en)
+        if (!en)
             return(NULL);
         strcpy(en, env[i]);
-        char *tok = strtok(en, dir);
+        tok = strtok(en, dir);
         res = tok;
     }
     else
