@@ -8,17 +8,15 @@
 
 int main(void)
 {
-	char *exit = "exit", *buf;
-	pid_t child;
+	char *buf;
 	int readed;
-	int res;
 	size_t len = 0;
 
 	while (1)
 	{
 		printf("#cisfun$ ");
 		readed = getline(&buf, &len, stdin);
-		res = prompt(buf, readed);
+		prompt(buf, readed);
 	}
 	return (0);
 }
