@@ -1,6 +1,12 @@
 #include "shell.h"
 
-/***/
+/**
+ * _getenv - get envirion name and return it
+ * 
+ * @name: name of the envirion var
+ * 
+ * Return: envirion content
+*/
 
 char *_getenv(const char *name)
 {

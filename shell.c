@@ -1,6 +1,10 @@
 #include "shell.h"
 
-/***/
+/**
+ * main - shell core function
+ * 
+ * Return: allways return 0
+*/
 
 int main(void)
 {

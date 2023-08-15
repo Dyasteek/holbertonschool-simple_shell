@@ -1,6 +1,16 @@
 #include "shell.h"
 
-/***/
+/**
+ * _exec - function to execute a command line
+ * 
+ * @cm: command to execute
+ * @line: line whith content all arguments
+ * 
+ * Return:
+ *      - -1 an error
+ *      - 0 success
+ *      - command not found
+*/
 
 int _exec(char *cm, char *line)
 {    
@@ -42,4 +52,52 @@ int _exec(char *cm, char *line)
     }
     else
         return (printf("command not found\n"));
+}
+
+/**
+ * lsh_exit - exit of the shell
+ * 
+ * Return: allways return 0;
+*/
+
+int lsh_exit(void)
+{
+    exit (0);
+}
+
+/**
+ * lsh_help - print help of the shell
+ * 
+ * Return: allways return 0
+*/
+
+int lsh_help(void)
+{
+	printf("Aaron Gonzalez and Andres del Rio\n");
+	printf("For more information contact us or call the police\n");
+
+	return (0);
+}
+
+/**
+ * lsh_cd - change the shell actual directory
+ * 
+ * Return: allways return 0
+*/
+
+int lsh_cd(char *line)
+{
+    char *arg = strtok(line, "\n");
+    char *args = strtok(arg, " ");
+
+    args = strtok(NULL, " ");
+    if (args == NULL)
+        fprintf(stderr, "shell: expected argument to \"cd\"\n");
+    else
+    {
+        if (chdir(args) != 0)
+            perror("shell");
+    }
+    free(line);
+    return (0);
 }

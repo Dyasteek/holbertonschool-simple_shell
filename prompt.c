@@ -1,6 +1,10 @@
 #include "shell.h"
 
-/***/
+/**
+ * prompt - get all text readed and re direct it to execute
+ * 
+ * Return: result of teh execution of the command
+*/
 
 int prompt(const char *line, int readed)
 {
@@ -13,16 +17,22 @@ int prompt(const char *line, int readed)
     strcpy(word, line);
 
     if (readed < 0 || strcmp(line, "exit\n") == 0)
-        return (lsh_exit(word));
+        return (lsh_exit());
 
     if (strcmp(line, "help\n") == 0)
-        return (lsh_help(word));
+        return (lsh_help());
 
     if (strncmp(word, "cd", 2) == 0)
         return (lsh_cd(word));
 
     return(_which(word));
 }
+
+/**
+ * _which - convert the line of text to command
+ * 
+ * Return: result of execution
+*/
 
 int _which(char *line)
 {
@@ -52,36 +62,4 @@ int _which(char *line)
     } while (stat(cpdir, &st) != 0 && dir != NULL);
 */
     return (_exec(cm, line));
-}
-
-int lsh_exit(char* arg)
-{
-    free(arg);
-    exit (0);
-}
-
-int lsh_help(char* arg)
-{
-    free(arg);
-	printf("Aaron Gonzalez and Andres del Rio\n");
-	printf("For more information contact us or call the police\n");
-
-	return (0);
-}
-
-int lsh_cd(char *line)
-{
-    char *arg = strtok(line, "\n");
-    char *args = strtok(arg, " ");
-
-    args = strtok(NULL, " ");
-    if (args == NULL)
-        fprintf(stderr, "shell: expected argument to \"cd\"\n");
-    else
-    {
-        if (chdir(args) != 0)
-            perror("shell");
-    }
-    free(line);
-    return (0);
 }
