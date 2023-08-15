@@ -20,7 +20,7 @@ int prompt(const char *line, int readed)
 	}
 	strcpy(word, line);
 
-	if (readed < 0 || strcmp(line, "exit\n") == 0)
+	if (readed < 0/* || strcmp(line, "exit\n") == 0*/)
 		return (lsh_exit());
 
 	if (strcmp(line, "help\n") == 0)
