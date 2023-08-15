@@ -6,19 +6,21 @@ int _exec(char *cm, char *line)
 {    
     struct stat st;
     pid_t child;
-    int status, i = 0;
+    int status, i = 1;
     char cpline[1048576], *command, *token, *arg[1024];
 
     strcpy(cpline, line);
     token = strtok(cpline, "\n");
     command = strtok(token, " ");
 
-    while (command != NULL)
+    arg[0] = command;
+
+    /*while (command != NULL)
     {
         arg[i] = command;
         command = strtok(NULL, " ");
         i++;
-    }
+    }*/
     
     if (stat(cm, &st) == 0)
     {
