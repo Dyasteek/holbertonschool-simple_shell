@@ -12,7 +12,7 @@ int main(void)
 	pid_t child;
 	int readed;
 	int res;
-	size_t len = 1024;
+	size_t len = 0;
 
 	buf = malloc(len);
 	if (!buf)
