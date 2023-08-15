@@ -25,11 +25,12 @@ int prompt(const char *line, int readed)
 
 	if (strcmp(line, "help\n") == 0)
 		return (lsh_help());
-
-	if (strncmp(word, "cd", 2) == 0)
-		return (lsh_cd(word));
-
+/*
+*	if (strncmp(word, "cd", 2) == 0)
+*		return (lsh_cd(word));
+*/
 	return (_which(word));
+
 }
 
 /**

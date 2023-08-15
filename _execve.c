@@ -53,7 +53,7 @@ int _exec(char *cm, char *line)
 		return (0);
 	}
 	else
-		return (printf("command not found\n"));
+		return (fprintf(stderr, "./shell: No such file or directory\n"));
 }
 
 /**
@@ -96,11 +96,11 @@ int lsh_cd(char *line)
 
 	args = strtok(NULL, " ");
 	if (args == NULL)
-		fprintf(stderr, "shell: expected argument to \"cd\"\n");
+		fprintf(stderr, "./shell: expected argument to \"cd\"\n");
 	else
 	{
 		if (chdir(args) != 0)
-			perror("shell");
+			perror("./shell");
 	}
 	free(line);
 	return (0);
