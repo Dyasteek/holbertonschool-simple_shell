@@ -2,27 +2,27 @@
 
 /**
  * main - shell core function
- * 
+ *
  * Return: allways return 0
 */
 
 int main(void)
 {
-    char *exit = "exit", *buf;
-    pid_t child;
-    int readed;
-    int res;
-    size_t len = 1024;
+	char *exit = "exit", *buf;
+	pid_t child;
+	int readed;
+	int res;
+	size_t len = 1024;
 
-    buf = malloc(len);
-    if (!buf)
-        return(-1);
+	buf = malloc(len);
+	if (!buf)
+		return (-1);
 
-    while(1)
-    {
-        printf("#cisfun$ ");
-        readed = getline(&buf, &len, stdin);
-        res = prompt(buf, readed);
-    }
-    return (0);
+	while (1)
+	{
+		printf("#cisfun$ ");
+		readed = getline(&buf, &len, stdin);
+		res = prompt(buf, readed);
+	}
+	return (0);
 }
