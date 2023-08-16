@@ -20,8 +20,11 @@ int prompt(const char *line, int readed)
 	}
 	strcpy(word, line);
 
-	if (readed < 0 || strcmp(line, "exit\n") == 0)
+	if (readed < 0/* || strcmp(line, "exit\n") == 0*/)
 		return (lsh_exit());
+
+	if (strcmp(line, "\n") == 0)
+		return (0);
 
 	if (strcmp(line, "help\n") == 0)
 		return (lsh_help());
@@ -42,15 +45,15 @@ int prompt(const char *line, int readed)
 
 int _which(char *line)
 {
-	struct stat st;
-	char cpcm[1024], cpline[100000], *adr, *cm, *PATH, *dir, *cpdir;
+	/*struct stat st;*/
+	char cpcm[1024], cpline[100000], *adr, *cm/*, *PATH, *dir, *cpdir*/;
 
 	strcpy(cpcm, line);
 	strcpy(cpline, line);
 
 	adr = strtok(cpcm, "\n");
 	cm = strtok(adr, " ");
-
+/*
 	PATH = _getenv("PATH");
 	dir = strtok(PATH, ":");
 
@@ -68,8 +71,8 @@ int _which(char *line)
 		dir = strtok(NULL, ":");
 	} while (stat(cpdir, &st) != 0 && dir != NULL);
 
-	if (stat(cpdir, &st) != 0)
-		return (_exec(cm, cpline));
-	else
+	if (stat(cpdir, &st) == 0)
 		return (_exec(cpdir, cpline));
+	else*/
+	return (_exec(cm, cpline));
 }
