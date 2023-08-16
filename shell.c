@@ -10,8 +10,11 @@ int main(void)
 {
 	char *buf;
 	int readed;
-	size_t len = 0;
+	size_t len = 1024;
 
+	buf = malloc(len);
+	if (!buf)
+		return (1);
 	while (1)
 	{
 		printf("$ ");

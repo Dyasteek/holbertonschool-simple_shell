@@ -51,10 +51,7 @@ int _exec(char *cm, char *line)
 		return (0);
 	}
 	else
-	{
-		free(line);
 		return (fprintf(stderr, "./shell: No such file or directory\n"));
-	}
 }
 
 /**

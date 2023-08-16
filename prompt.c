@@ -24,13 +24,20 @@ int prompt(const char *line, int readed)
 		word++;
 
 	if (readed < 0 || strcmp(word, "exit\n") == 0)
+	{
+		free(word);
 		return (lsh_exit());
+	}
 	if (strcmp(word, "\n") == 0)
+	{
+		free(word);
 		return (0);
-
+	}
 	if (strcmp(word, "help\n") == 0)
+	{
+		free(word);
 		return (lsh_help());
-
+	}
 	if (strncmp(word, "cd", 2) == 0)
 		return (lsh_cd(word));
 
@@ -48,7 +55,8 @@ int prompt(const char *line, int readed)
 int _which(char *line)
 {
 	struct stat st;
-	char cpcm[1024], cpline[100000], *adr, *cm, *PATH, *dir, *cpdir;
+	char cpcm[1024], cpline[100000], cpPATH[1000000];
+	char *adr, *cm, *PATH, *dir, *cpdir;
 
 	strcpy(cpcm, line);
 	strcpy(cpline, line);
@@ -56,7 +64,8 @@ int _which(char *line)
 	adr = strtok(cpcm, "\n");
 	cm = strtok(adr, " ");
 	PATH = _getenv("PATH");
-	dir = strtok(PATH, ":");
+	strcpy(cpPATH, PATH);
+	dir = strtok(cpPATH, ":");
 
 	cpdir = malloc(1024);
 	if (!cpdir)
@@ -64,7 +73,6 @@ int _which(char *line)
 		free(PATH);
 		return (1);
 	}
-
 	do {
 		strcpy(cpdir, dir);
 		strcat(cpdir, "/");
@@ -76,5 +84,4 @@ int _which(char *line)
 		return (_exec(cpdir, cpline));
 	else
 		return (_exec(cm, cpline));
-	
 }

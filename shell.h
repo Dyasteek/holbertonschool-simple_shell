@@ -17,7 +17,7 @@ unsigned int _wcs(char *line);
 int _exec(char *cm, char *line);
 char **_arrarg(char *line);
 int _which(char *line);
-char *_getenv(const char *name);
+char *_getenv(char *name);
 int lsh_exit(void);
 int lsh_help(void);
 int lsh_cd(char *line);

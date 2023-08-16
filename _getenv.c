@@ -10,35 +10,24 @@
 
 char *_getenv(char *name)
 {
-	unsigned int i = 0;
-	char **env = environ;
-	char *res, *en, *tok, *dir;
+	size_t name_len, i;
+	char *result;
 
-	dir = malloc(strlen(name) + 1);
-	if (!dir)
-	{
-		free(name);
+	if (name == NULL || environ == NULL)
 		return (NULL);
-	}
 
-	strcpy(dir, name);
-	strcat(dir, "=");
+	name_len = strlen(name);
+	result = NULL;
 
-	while (strncmp(env[i], dir, strlen(dir)) != 0 && env[i] != NULL)
-		i++;
-
-	if (env[i] != NULL)
+	for (i = 0; environ[i] != NULL; i++)
 	{
-		en = malloc(strlen(env[i]) + 1);
-		if (!en)
+		if (strncmp(environ[i], name, name_len) == 0 &&
+			environ[i][name_len] == '=')
 		{
-			return (NULL);
+			result = &environ[i][name_len + 1];
+			break;
 		}
-		strcpy(en, env[i]);
-		tok = strtok(en, dir);
-		res = tok;
 	}
-	else
-		res = NULL;
-	return (res);
+
+	return (result);
 }
