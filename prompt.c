@@ -43,17 +43,16 @@ int prompt(const char *line, int readed)
 int _which(char *line)
 {
 	struct stat st;
-	char cpline[1048576];
+	char cpline[1048576], *adr, *cm, *PATH, *dir, *cpdir;
 
 	strcpy(cpline, line);
 
-	char *adr = strtok(cpline, "\n");
-	char *cm = strtok(adr, " ");
+	adr = strtok(cpline, "\n");
+	cm = strtok(adr, " ");
 
-	char *PATH = _getenv("PATH");
-	char *dir = strtok(PATH, ":");
-
-	char *cpdir = malloc(1024);
+	PATH = _getenv("PATH");
+	dir = strtok(PATH, ":");
+	cpdir = malloc(1024);
 
 	if (!cpdir)
 	{

@@ -10,9 +10,13 @@
 
 char *_getenv(const char *name)
 {
-	char **env = environ;
-	char *res, *en, *tok, dir[strlen(name)];
 	unsigned int i = 0;
+	char **env = environ;
+	char *res, *en, *tok, *dir;
+
+	dir = malloc(strlen(name));
+	if(!dir)
+		return (NULL);
 
 	strcpy(dir, name);
 	strcat(dir, "=");
