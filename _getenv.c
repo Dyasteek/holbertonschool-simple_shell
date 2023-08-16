@@ -8,15 +8,18 @@
  * Return: envirion content
 */
 
-char *_getenv(const char *name)
+char *_getenv(char *name)
 {
 	unsigned int i = 0;
 	char **env = environ;
 	char *res, *en, *tok, *dir;
 
-	dir = malloc(strlen(name));
+	dir = malloc(strlen(name) + 1);
 	if (!dir)
+	{
+		free(name);
 		return (NULL);
+	}
 
 	strcpy(dir, name);
 	strcat(dir, "=");
@@ -26,9 +29,11 @@ char *_getenv(const char *name)
 
 	if (env[i] != NULL)
 	{
-		en = malloc(strlen(env[i]));
+		en = malloc(strlen(env[i]) + 1);
 		if (!en)
+		{
 			return (NULL);
+		}
 		strcpy(en, env[i]);
 		tok = strtok(en, dir);
 		res = tok;

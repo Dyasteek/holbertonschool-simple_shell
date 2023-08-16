@@ -16,7 +16,7 @@ int prompt(const char *line, int readed)
 	if (!word)
 	{
 		perror("Error malloc");
-		return (-1);
+		return (1);
 	}
 	strcpy(word, line);
 
@@ -76,4 +76,5 @@ int _which(char *line)
 		return (_exec(cpdir, cpline));
 	else
 		return (_exec(cm, cpline));
+	
 }

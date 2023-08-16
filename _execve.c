@@ -12,26 +12,26 @@
  *      - command not found
 */
 
-int _exec(char *cm, __attribute__ ((unused)) char *line)
+int _exec(char *cm, char *line)
 {
 	struct stat st;
 	pid_t child;
-	int status/*, i = 1*/;
-	char /*cpline[1048576], *command, *token,*/ *arg[1024];
-/*
+	int status, i = 1;
+	char cpline[1048576], *command, *token, *arg[1024];
+
 	strcpy(cpline, line);
 	token = strtok(cpline, "\n");
 	command = strtok(token, " ");
-*/
+
 	arg[0] = cm;
-/*
+
 	while (command != NULL)
 	{
 		command = strtok(NULL, " ");
 		arg[i] = command;
 		i++;
 	}
-*/
+
 	if (stat(arg[0], &st) == 0)
 	{
 		child = fork();
@@ -51,7 +51,10 @@ int _exec(char *cm, __attribute__ ((unused)) char *line)
 		return (0);
 	}
 	else
+	{
+		free(line);
 		return (fprintf(stderr, "./shell: No such file or directory\n"));
+	}
 }
 
 /**
