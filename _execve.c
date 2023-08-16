@@ -16,7 +16,7 @@ int _exec(char *cm, char *line)
 {
 	struct stat st;
 	pid_t child;
-	int status, i = 0;
+	int status, i = 1;
 	char cpline[1048576], *command, *token, *arg[1024];
 
 	strcpy(cpline, line);
@@ -28,7 +28,7 @@ int _exec(char *cm, char *line)
 	while (command != NULL)
 	{
 		command = strtok(NULL, " ");
-		arg[1] = command;
+		arg[i] = command;
 		i++;
 	}
 

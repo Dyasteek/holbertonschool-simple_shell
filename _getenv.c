@@ -15,7 +15,7 @@ char *_getenv(const char *name)
 	char *res, *en, *tok, *dir;
 
 	dir = malloc(strlen(name));
-	if(!dir)
+	if (!dir)
 		return (NULL);
 
 	strcpy(dir, name);

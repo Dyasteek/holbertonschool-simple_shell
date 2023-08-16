@@ -43,17 +43,18 @@ int prompt(const char *line, int readed)
 int _which(char *line)
 {
 	struct stat st;
-	char cpline[1048576], *adr, *cm, *PATH, *dir, *cpdir;
+	char cpcm[1024], cpline[100000], *adr, *cm, *PATH, *dir, *cpdir;
 
+	strcpy(cpcm, line);
 	strcpy(cpline, line);
 
-	adr = strtok(cpline, "\n");
+	adr = strtok(cpcm, "\n");
 	cm = strtok(adr, " ");
 
 	PATH = _getenv("PATH");
 	dir = strtok(PATH, ":");
-	cpdir = malloc(1024);
 
+	cpdir = malloc(1024);
 	if (!cpdir)
 	{
 		free(PATH);
@@ -68,7 +69,7 @@ int _which(char *line)
 	} while (stat(cpdir, &st) != 0 && dir != NULL);
 
 	if (stat(cpdir, &st) != 0)
-		return (_exec(cm, line));
+		return (_exec(cm, cpline));
 	else
-		return (_exec(cpdir, line));
+		return (_exec(cpdir, cpline));
 }
