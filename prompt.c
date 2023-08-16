@@ -20,13 +20,16 @@ int prompt(const char *line, int readed)
 	}
 	strcpy(word, line);
 
-	if (readed < 0/* || strcmp(line, "exit\n") == 0*/)
-		return (lsh_exit());
+	while (*word == ' ' || *word == '\t')
+        word++;
 
-	if (strcmp(line, "\n") == 0)
+	if (readed < 0/* || strcmp(word, "exit\n") == 0*/)
+		return (lsh_exit());
+		
+	if (strcmp(word, "\n") == 0)
 		return (0);
 
-	if (strcmp(line, "help\n") == 0)
+	if (strcmp(word, "help\n") == 0)
 		return (lsh_help());
 
 	if (strncmp(word, "cd", 2) == 0)
