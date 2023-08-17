@@ -1,6 +1,8 @@
 #include "shell.h"
 
-/***/
+/**
+ * non_interactive - non interactive mode of shell
+*/
 
 void non_interactive(void)
 {
