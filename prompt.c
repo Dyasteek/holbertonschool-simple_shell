@@ -9,7 +9,7 @@
  * Return: result of teh execution of the command
 */
 
-int prompt(const char *line, int readed)
+int prompt(char *line)
 {
 	char *word = malloc(strlen(line) + 1);
 
@@ -20,14 +20,6 @@ int prompt(const char *line, int readed)
 	}
 	strcpy(word, line);
 
-	while (*word == ' ' || *word == '\t')
-		word++;
-
-	if (readed < 0 || strcmp(word, "exit\n") == 0)
-	{
-		free(word);
-		return (lsh_exit());
-	}
 	if (strcmp(word, "\n") == 0)
 	{
 		free(word);
@@ -56,32 +48,27 @@ int _which(char *line)
 {
 	struct stat st;
 	char cpcm[1024], cpline[100000], cpPATH[1000000];
-	char *adr, *cm, *PATH, *dir, *cpdir;
+	char *adr, *command, *dir, cpdir[1024];
 
 	strcpy(cpcm, line);
 	strcpy(cpline, line);
 
 	adr = strtok(cpcm, "\n");
-	cm = strtok(adr, " ");
-	PATH = _getenv("PATH");
-	strcpy(cpPATH, PATH);
+	command = strtok(adr, " ");
+	strcpy(cpPATH, _getenv("PATH"));
 	dir = strtok(cpPATH, ":");
 
-	cpdir = malloc(1024);
-	if (!cpdir)
-	{
-		free(PATH);
-		return (1);
-	}
 	do {
 		strcpy(cpdir, dir);
 		strcat(cpdir, "/");
-		strcat(cpdir, cm);
+		strcat(cpdir, command);
 		dir = strtok(NULL, ":");
 	} while (stat(cpdir, &st) != 0 && dir != NULL);
+
+	free(line);
 
 	if (stat(cpdir, &st) == 0)
 		return (_exec(cpdir, cpline));
 	else
-		return (_exec(cm, cpline));
+		return (_exec(command, cpline));
 }

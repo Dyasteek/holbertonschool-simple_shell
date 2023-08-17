@@ -15,11 +15,24 @@ int main(void)
 	buf = malloc(len);
 	if (!buf)
 		return (1);
+
 	while (1)
 	{
 		printf("$ ");
 		readed = getline(&buf, &len, stdin);
-		prompt(buf, readed);
+		if (readed < 0)
+		{
+			free(buf);
+			break;
+		}
+		while (*buf == ' ' || *buf == '\t')
+			buf++;
+		if (strcmp(buf, "exit\n") == 0)
+		{
+			free(buf);
+			break;
+		}
+		prompt(buf);
 	}
 	return (0);
 }

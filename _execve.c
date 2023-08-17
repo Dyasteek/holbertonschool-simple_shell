@@ -12,7 +12,7 @@
  *      - command not found
 */
 
-int _exec(char *cm, char *line)
+int _exec(char *com, char *line)
 {
 	struct stat st;
 	pid_t child;
@@ -23,7 +23,7 @@ int _exec(char *cm, char *line)
 	token = strtok(cpline, "\n");
 	command = strtok(token, " ");
 
-	arg[0] = cm;
+	arg[0] = com;
 
 	while (command != NULL)
 	{
@@ -44,7 +44,7 @@ int _exec(char *cm, char *line)
 		{
 			if (execve(arg[0], arg, environ) == -1)
 				perror("Error execve");
-			return (0);
+			return (1);
 		}
 		else
 			wait(&status);
@@ -52,17 +52,6 @@ int _exec(char *cm, char *line)
 	}
 	else
 		return (fprintf(stderr, "./shell: No such file or directory\n"));
-}
-
-/**
- * lsh_exit - exit of the shell
- *
- * Return: allways return 0;
-*/
-
-int lsh_exit(void)
-{
-	exit(0);
 }
 
 /**
