@@ -20,5 +20,6 @@ int _which(char *line);
 char *_getenv(char *name);
 int lsh_help(void);
 int lsh_cd(char *line);
+void non_interactive(void);
 
 #endif

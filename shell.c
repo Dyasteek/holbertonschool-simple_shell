@@ -3,26 +3,26 @@
 /**
  * main - shell core function
  *
- * Return: allways return 0
+ * Return:
+ *		- interactive: 0
+ *		- non_interactive: exit whit value of the execve
 */
 
 int main(void)
 {
 	char *buf;
-	int readed, interactive = 0, res = 0;
+	int readed;
 	size_t len = 1024;
+
+	if (isatty(STDIN_FILENO) == 1)
+		non_interactive();
 
 	buf = malloc(len);
 	if (!buf)
 		return (1);
-
-	if (isatty(STDIN_FILENO) == 1)
-		interactive = 1;
-
 	while (1)
 	{
-		if (interactive == 1)
-			printf("$ ");
+		printf("$ ");
 		readed = getline(&buf, &len, stdin);
 		if (readed < 0)
 		{
@@ -36,10 +36,7 @@ int main(void)
 			free(buf);
 			break;
 		}
-		res = prompt(buf);
+		prompt(buf);
 	}
-	if (interactive == 1)
-		return (0);
-	else
-		return (res);
+	return (0);
 }

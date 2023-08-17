@@ -7,7 +7,7 @@
  * @line: line whith content all arguments
  *
  * Return:
- *      - 1 an error
+ *      - an error
  *      - 0 success
  *      - command not found
 */
@@ -44,7 +44,6 @@ int _exec(char *com, char *line)
 		{
 			if (execve(arg[0], arg, environ) == -1)
 				perror("Error execve");
-			return (1);
 		}
 		else
 			wait(&status);
