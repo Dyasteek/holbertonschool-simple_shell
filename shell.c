@@ -9,16 +9,20 @@
 int main(void)
 {
 	char *buf;
-	int readed;
+	int readed, interactive = 0;
 	size_t len = 1024;
 
 	buf = malloc(len);
 	if (!buf)
 		return (1);
 
+	if (isatty(STDIN_FILENO) == 1)
+		interactive = 1;
+
 	while (1)
 	{
-		printf("$ ");
+		if (interactive == 1)
+			printf("$ ");
 		readed = getline(&buf, &len, stdin);
 		if (readed < 0)
 		{
