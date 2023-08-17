@@ -14,7 +14,7 @@ int main(void)
 	int readed;
 	size_t len = 1024;
 
-	if (isatty(STDIN_FILENO) == 1)
+	if (isatty(STDIN_FILENO) == 0)
 		non_interactive();
 
 	buf = malloc(len);

@@ -11,7 +11,7 @@ void non_interactive(void)
 
     buf = malloc(len);
 	if (!buf)
-			exit(1);
+		exit(1);
 	while (1)
 	{
 	    readed = getline(&buf, &len, stdin);
