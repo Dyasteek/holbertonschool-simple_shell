@@ -3,7 +3,7 @@
 /**
  * _exec - function to execute a command line
  *
- * @cm: command to execute
+ * @com: command to execute
  * @line: line whith content all arguments
  *
  * Return:

@@ -4,7 +4,6 @@
  * prompt - get all text readed and re direct it to execute
  *
  * @line: line of text
- * @readed: key for ^D
  *
  * Return: result of teh execution of the command
 */
