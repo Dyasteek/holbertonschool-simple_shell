@@ -9,7 +9,7 @@
 int main(void)
 {
 	char *buf;
-	int readed, interactive = 0;
+	int readed, interactive = 0, res = 0;
 	size_t len = 1024;
 
 	buf = malloc(len);
@@ -36,7 +36,10 @@ int main(void)
 			free(buf);
 			break;
 		}
-		prompt(buf);
+		res = prompt(buf);
 	}
-	return (0);
+	if (interactive == 1)
+		return (0);
+	else
+		return (res);
 }
