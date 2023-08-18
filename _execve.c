@@ -24,14 +24,12 @@ int _exec(char *com, char *line)
 	command = strtok(token, " ");
 
 	arg[0] = com;
-
 	while (command != NULL)
 	{
 		command = strtok(NULL, " ");
 		arg[i] = command;
 		i++;
 	}
-
 	if (stat(arg[0], &st) == 0)
 	{
 		child = fork();
@@ -47,7 +45,8 @@ int _exec(char *com, char *line)
 			return (2);
 		}
 		else
-			return (wait(&status));
+			wait(&status);
+		return (status);
 	}
 	else
 	{
