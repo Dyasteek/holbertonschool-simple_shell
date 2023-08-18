@@ -19,7 +19,7 @@ char *_getenv(char *name);
 int lsh_help(void);
 int lsh_cd(char *line);
 void non_interactive(void);
-char **str_tok(char* line, char* delimiter);
+char **str_tok(char* line, char *delimiter);
 int t_size(char *line, char delm);
 
 #endif

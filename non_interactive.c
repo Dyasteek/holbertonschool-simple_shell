@@ -23,6 +23,12 @@ void non_interactive(void)
 		chek_buf = buf;
 		while (*chek_buf == ' ' || *chek_buf == '\t')
 			chek_buf++;
+		if (strcmp(buf, "exit\n") == 0)
+		{
+			free(buf);
+			exit_st = 0;
+			break;
+		}
 		exit_st = prompt(chek_buf);
 	}
 	exit(exit_st);
