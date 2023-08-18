@@ -59,17 +59,22 @@ int _which(char *line, unsigned long int iteration, char *exe)
 	duplicate = strdup(adr);
 	command = strtok(duplicate, " ");
 	strcpy(cpPATH, _getenv("PATH"));
-	dir = strtok(cpPATH, ":");
+	if (cpPATH[0] != '\0')
+	{
+		dir = strtok(cpPATH, ":");
 
-	do {
-		strcpy(cpdir, dir);
-		strcat(cpdir, "/");
-		strcat(cpdir, command);
-		dir = strtok(NULL, ":");
-	} while (stat(cpdir, &st) != 0 && dir != NULL);
+		do {
+			strcpy(cpdir, dir);
+			strcat(cpdir, "/");
+			strcat(cpdir, command);
+			dir = strtok(NULL, ":");
+		} while (stat(cpdir, &st) != 0 && dir != NULL);
 
-	if (stat(cpdir, &st) == 0)
-		exit_stat = _exec(cpdir, adr, iteration, exe);
+		if (stat(cpdir, &st) == 0)
+			exit_stat = _exec(cpdir, adr, iteration, exe);
+		else
+			exit_stat = _exec(command, adr, iteration, exe);
+	}
 	else
 		exit_stat = _exec(command, adr, iteration, exe);
 	free(duplicate);
