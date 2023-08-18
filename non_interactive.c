@@ -8,7 +8,7 @@ void non_interactive(void)
 {
 	char *buf, *chek_buf;
 	size_t len = 1024;
-	int exit_st = 1;
+	int exit_st = 0;
 
 	buf = malloc(len);
 	if (!buf)
@@ -18,6 +18,7 @@ void non_interactive(void)
 		if (getline(&buf, &len, stdin) == -1)
 		{
 			free(buf);
+			exit_st = 1;
 			break;
 		}
 		chek_buf = buf;
@@ -26,7 +27,6 @@ void non_interactive(void)
 		if (strcmp(buf, "exit\n") == 0)
 		{
 			free(buf);
-			exit_st = 0;
 			break;
 		}
 		exit_st = prompt(chek_buf);
