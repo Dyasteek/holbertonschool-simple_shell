@@ -1,0 +1,47 @@
+.TH man 1 "AUG 18 2023" "Holberton Simple Shell"
+
+.SH NAME
+    hsh - Holberton Simple Shell: command line interpreter
+
+.SH SYNOPSIS
+hsh [filename]
+
+.SH DESCRIPTION
+    .B hsh
+    is a basic imitation of a command line interpreter tat reads and implements basic commands from user input,
+    functioning similarly to a shell.
+.PP
+    .B hsh
+    is compiled on Ubuntu 20.04 LTS with gcc and is designed to run in both interactive and non-interactive modes.
+.PP
+.SH USER input
+    When a user enters a command and presses Enter, the shell performs the following actions:
+
+    1. Divides the command into a set of words.
+
+    2. Searches for the entered command.
+
+    3. Executes the command.
+.PP
+.SH COMMAND SEARCH
+    When searching for a command, the shell first checks if it is a built-in command.
+    If a built-in command is not found, the shell looks for the commmand in the PATH.
+.PP
+.SH BUILT-IT commands
+    .IP help
+    Displays the shell's help.
+    .IP exit
+    Terminates the process and frees allocated memory.
+    .IP cd
+    Changes the crurrent directory.
+
+.SH ISSUES
+    Currently, there are issues with the functioning of the Tab and Enter combination.
+
+.SH AUTHORS
+    .PP
+    Aaron Gonzalez - https://github.com/AaronEGH16
+    .PP
+    Andres del Rio - https://github.com/dyasteek
+
+    
