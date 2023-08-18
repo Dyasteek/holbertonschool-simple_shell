@@ -22,9 +22,9 @@ char *_getenv(char *name)
 	for (i = 0; environ[i] != NULL; i++)
 	{
 		if (strncmp(environ[i], name, name_len) == 0 &&
-			environ[i][name_len] == '=')
+			environ[i][name_len - 1] == '=')
 		{
-			result = &environ[i][name_len + 1];
+			result = &environ[i][name_len];
 			break;
 		}
 	}
