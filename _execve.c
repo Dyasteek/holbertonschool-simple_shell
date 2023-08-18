@@ -44,13 +44,16 @@ int _exec(char *com, char *line)
 		{
 			if (execve(arg[0], arg, environ) == -1)
 				perror("Error execve");
+			return (2);
 		}
 		else
-			wait(&status);
-		return (0);
+			return (wait(&status));
 	}
 	else
-		return (fprintf(stderr, "./shell: No such file or directory\n"));
+	{
+		fprintf(stderr, "%s: %i: %s: not found\n", _getenv("_"), 1, arg[0]);
+		return (127);
+	}
 }
 
 /**
@@ -82,11 +85,11 @@ int lsh_cd(char *line)
 
 	args = strtok(NULL, " ");
 	if (args == NULL)
-		fprintf(stderr, "./shell: expected argument to \"cd\"\n");
+		fprintf(stderr, "%s: expected argument to \"cd\"\n", _getenv("_"));
 	else
 	{
 		if (chdir(args) != 0)
-			perror("./shell");
+			perror(_getenv("_"));
 	}
 	free(line);
 	return (0);
