@@ -43,7 +43,7 @@ int _exec(char *com, char *line, unsigned long int iteration, char *exe)
 		{
 			if (execve(arg[0], arg, environ) == -1)
 				perror("Error execve");
-			return (2);
+			return (1);
 		}
 		else
 			wait(&status);
