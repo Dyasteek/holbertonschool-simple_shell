@@ -87,7 +87,7 @@ int _which(char *line, unsigned long int iteration, char *exe)
 		else
 		{
 			fprintf(stderr, "%s: %li: %s: not found\n", exe, iteration, command);
-			return (127);
+			exit_stat = 127;
 		}
 	}
 	free(duplicate);
