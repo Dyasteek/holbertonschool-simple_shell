@@ -58,7 +58,7 @@ int _which(char *line, unsigned long int iteration, char *exe)
 
 	duplicate = strdup(adr);
 	command = strtok(duplicate, " ");
-	if (_getenv("PATH") != NULL)
+	if (_getenv("PATH") != NULL && strcmp(_getenv("PATH"), "") != 0)
 	{
 		strcpy(cpPATH, _getenv("PATH"));
 		dir = strtok(cpPATH, ":");
