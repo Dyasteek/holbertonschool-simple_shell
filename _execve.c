@@ -96,3 +96,23 @@ int lsh_cd(char *line, char *exe)
 	free(line);
 	return (0);
 }
+
+/**
+ * lsh_env - print all environ content
+ *
+ * Return: allways return 0
+*/
+
+int lsh_env(void)
+{
+	char **env = environ;
+	size_t run = 0;
+
+	while (env[run])
+	{
+		write(STDOUT_FILENO, env[run], strlen(env[run]));
+		write(STDOUT_FILENO, "\n", 1);
+		run++;
+	}
+	return (0);
+}

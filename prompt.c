@@ -31,6 +31,11 @@ int prompt(char *line, unsigned long int iteration, char *exe)
 		free(word);
 		return (lsh_help());
 	}
+	if (strcmp(word, "env\n") == 0)
+	{
+		free(word);
+		return (lsh_env());
+	}
 	if (strncmp(word, "cd", 2) == 0)
 		return (lsh_cd(word, exe));
 
