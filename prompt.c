@@ -77,7 +77,7 @@ int _which(char *line, unsigned long int iteration, char *exe)
 	}
 	else
 	{
-		if (stat(command, &st) == 0)
+		if (access(command, F_OK) == 0)
 			exit_stat = _exec(command, adr, iteration, exe);
 		else
 		{
