@@ -9,6 +9,7 @@ void non_interactive(void)
 	char *buf, *chek_buf;
 	size_t len = 1024;
 	int exit_st = 0;
+	unsigned long int iteration = 1;
 
 	buf = malloc(len);
 	if (!buf)
@@ -28,7 +29,8 @@ void non_interactive(void)
 			free(buf);
 			break;
 		}
-		exit_st = prompt(chek_buf);
+		exit_st = prompt(chek_buf, iteration);
+		iteration++;
 	}
 	exit(exit_st);
 }

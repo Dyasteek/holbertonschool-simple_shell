@@ -13,6 +13,7 @@ int main(void)
 	char *buf;
 	int readed;
 	size_t len = 1024;
+	unsigned long int iteration = 1;
 
 	if (isatty(STDIN_FILENO) == 0)
 		non_interactive();
@@ -36,7 +37,8 @@ int main(void)
 			free(buf);
 			break;
 		}
-		prompt(buf);
+		prompt(buf, iteration);
+		iteration++;
 	}
 	return (0);
 }

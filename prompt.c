@@ -4,11 +4,12 @@
  * prompt - get all text readed and re direct it to execute
  *
  * @line: line of text
+ * @iteration: number of the line in execution
  *
  * Return: result of teh execution of the command
 */
 
-int prompt(char *line)
+int prompt(char *line, unsigned long int iteration)
 {
 	char *word = malloc(strlen(line) + 1);
 
@@ -32,18 +33,19 @@ int prompt(char *line)
 	if (strncmp(word, "cd", 2) == 0)
 		return (lsh_cd(word));
 
-	return (_which(word));
+	return (_which(word, iteration));
 }
 
 /**
  * _which - convert the line of text to command
  *
  * @line: line of text
+ * @iteration: number of the line in execution
  *
  * Return: result of execution
 */
 
-int _which(char *line)
+int _which(char *line, unsigned long int iteration)
 {
 	struct stat st;
 	int exit_stat;
@@ -65,9 +67,9 @@ int _which(char *line)
 	} while (stat(cpdir, &st) != 0 && dir != NULL);
 
 	if (stat(cpdir, &st) == 0)
-		exit_stat = _exec(cpdir, adr);
+		exit_stat = _exec(cpdir, adr, iteration);
 	else
-		exit_stat = _exec(command, adr);
+		exit_stat = _exec(command, adr, iteration);
 	free(duplicate);
 	free(adr);
 	return (exit_stat);

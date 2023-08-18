@@ -5,6 +5,7 @@
  *
  * @com: command to execute
  * @line: line whith content all arguments
+ * @iteration: number of the line in execution
  *
  * Return:
  *      - 1 an error
@@ -12,7 +13,7 @@
  *      - command not found
 */
 
-int _exec(char *com, char *line)
+int _exec(char *com, char *line, unsigned long int iteration)
 {
 	struct stat st;
 	pid_t child;
@@ -50,7 +51,7 @@ int _exec(char *com, char *line)
 	}
 	else
 	{
-		fprintf(stderr, "%s: %i: %s: not found\n", _getenv("_"), 1, arg[0]);
+		fprintf(stderr, "%s: %li: %s: not found\n", _getenv("_"), iteration, arg[0]);
 		return (127);
 	}
 }
