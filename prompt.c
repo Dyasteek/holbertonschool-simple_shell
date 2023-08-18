@@ -11,6 +11,7 @@
 int prompt(char *line)
 {
 	char *word = malloc(strlen(line) + 1);
+
 	if (!word)
 	{
 		perror("Error malloc");
