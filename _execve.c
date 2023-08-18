@@ -24,7 +24,6 @@ int _exec(char *com, char *line, unsigned long int iteration, char *exe)
 	strcpy(cpline, line);
 	token = strtok(cpline, "\n");
 	command = strtok(token, " ");
-
 	arg[0] = com;
 	while (command != NULL)
 	{
@@ -48,6 +47,8 @@ int _exec(char *com, char *line, unsigned long int iteration, char *exe)
 		}
 		else
 			wait(&status);
+		if (WIFEXITED(status))
+			status = WEXITSTATUS(status);
 		return (status);
 	}
 	else
