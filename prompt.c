@@ -11,7 +11,6 @@
 int prompt(char *line)
 {
 	char *word = malloc(strlen(line) + 1);
-
 	if (!word)
 	{
 		perror("Error malloc");
@@ -46,14 +45,14 @@ int prompt(char *line)
 int _which(char *line)
 {
 	struct stat st;
-	char cpcm[1024], cpline[100000], cpPATH[1000000];
-	char *adr, *command, *dir, cpdir[1024];
+	int exit_stat;
+	char cpPATH[1000000], cpdir[1024];
+	char *adr, *command, *dir, *duplicate;
 
-	strcpy(cpcm, line);
-	strcpy(cpline, line);
+	adr = strtok(line, "\n");
 
-	adr = strtok(cpcm, "\n");
-	command = strtok(adr, " ");
+	duplicate = strdup(adr);
+	command = strtok(duplicate, " ");
 	strcpy(cpPATH, _getenv("PATH"));
 	dir = strtok(cpPATH, ":");
 
@@ -64,10 +63,11 @@ int _which(char *line)
 		dir = strtok(NULL, ":");
 	} while (stat(cpdir, &st) != 0 && dir != NULL);
 
-	free(line);
-
 	if (stat(cpdir, &st) == 0)
-		return (_exec(cpdir, cpline));
+		exit_stat = _exec(cpdir, adr);
 	else
-		return (_exec(command, cpline));
+		exit_stat = _exec(command, adr);
+	free(duplicate);
+	free(adr);
+	return (exit_stat);
 }

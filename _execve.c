@@ -7,7 +7,7 @@
  * @line: line whith content all arguments
  *
  * Return:
- *      - an error
+ *      - 1 an error
  *      - 0 success
  *      - command not found
 */
