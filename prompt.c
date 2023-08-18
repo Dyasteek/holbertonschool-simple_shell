@@ -76,7 +76,15 @@ int _which(char *line, unsigned long int iteration, char *exe)
 			exit_stat = _exec(command, adr, iteration, exe);
 	}
 	else
-		exit_stat = _exec(command, adr, iteration, exe);
+	{
+		if (stat(command, &st) == 0)
+			exit_stat = _exec(command, adr, iteration, exe);
+		else
+		{
+			fprintf(stderr, "%s: %li: %s: not found\n", exe, iteration, arg[0]);
+			exit_stat = 127;
+		}
+	}
 	free(duplicate);
 	free(adr);
 	return (exit_stat);
