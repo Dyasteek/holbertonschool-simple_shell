@@ -18,7 +18,6 @@ void non_interactive(void)
 		if (getline(&buf, &len, stdin) == -1)
 		{
 			free(buf);
-			exit_st = 1;
 			break;
 		}
 		chek_buf = buf;
