@@ -6,6 +6,7 @@
  * @com: command to execute
  * @line: line whith content all arguments
  * @iteration: number of the line in execution
+ * @exe: name of the executable shell
  *
  * Return:
  *      - 1 an error
@@ -13,7 +14,7 @@
  *      - command not found
 */
 
-int _exec(char *com, char *line, unsigned long int iteration)
+int _exec(char *com, char *line, unsigned long int iteration, char *exe)
 {
 	struct stat st;
 	pid_t child;
@@ -51,7 +52,7 @@ int _exec(char *com, char *line, unsigned long int iteration)
 	}
 	else
 	{
-		fprintf(stderr, "%s: %li: %s: not found\n", _getenv("_"), iteration, arg[0]);
+		fprintf(stderr, "%s: %li: %s: not found\n", exe, iteration, arg[0]);
 		return (127);
 	}
 }
@@ -74,11 +75,12 @@ int lsh_help(void)
  * lsh_cd - change the shell actual directory
  *
  * @line: line of text whith contains all arguments
+ * @exe: name of the executable shell
  *
  * Return: allways return 0
 */
 
-int lsh_cd(char *line)
+int lsh_cd(char *line, char *exe)
 {
 	char *arg = strtok(line, "\n");
 	char *args = strtok(arg, " ");
@@ -89,7 +91,7 @@ int lsh_cd(char *line)
 	else
 	{
 		if (chdir(args) != 0)
-			perror(_getenv("_"));
+			perror(exe);
 	}
 	free(line);
 	return (0);

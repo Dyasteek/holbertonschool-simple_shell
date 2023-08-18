@@ -3,20 +3,25 @@
 /**
  * main - shell core function
  *
+ * @ac: args counter
+ * @ar: array of all args passed to main function
+ *
  * Return:
  *		- interactive: 0
  *		- non_interactive: exit whit value of the execve
 */
 
-int main(void)
+int main(int ac, char **ar)
 {
 	char *buf;
 	int readed;
 	size_t len = 1024;
 	unsigned long int iteration = 1;
 
+	(void)ac;
+
 	if (isatty(STDIN_FILENO) == 0)
-		non_interactive();
+		non_interactive(ar[0]);
 
 	buf = malloc(len);
 	if (!buf)
@@ -37,7 +42,7 @@ int main(void)
 			free(buf);
 			break;
 		}
-		prompt(buf, iteration);
+		prompt(buf, iteration, ar[0]);
 		iteration++;
 	}
 	return (0);

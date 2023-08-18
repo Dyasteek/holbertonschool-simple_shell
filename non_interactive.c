@@ -2,9 +2,11 @@
 
 /**
  * non_interactive - non interactive mode of shell
+ *
+ * @exe: name of the executable shell
 */
 
-void non_interactive(void)
+void non_interactive(char *exe)
 {
 	char *buf, *chek_buf;
 	size_t len = 1024;
@@ -29,7 +31,7 @@ void non_interactive(void)
 			free(buf);
 			break;
 		}
-		exit_st = prompt(chek_buf, iteration);
+		exit_st = prompt(chek_buf, iteration, exe);
 		iteration++;
 	}
 	exit(exit_st);

@@ -5,11 +5,12 @@
  *
  * @line: line of text
  * @iteration: number of the line in execution
+ * @exe: name of the executable shell
  *
  * Return: result of teh execution of the command
 */
 
-int prompt(char *line, unsigned long int iteration)
+int prompt(char *line, unsigned long int iteration, char *exe)
 {
 	char *word = malloc(strlen(line) + 1);
 
@@ -31,9 +32,9 @@ int prompt(char *line, unsigned long int iteration)
 		return (lsh_help());
 	}
 	if (strncmp(word, "cd", 2) == 0)
-		return (lsh_cd(word));
+		return (lsh_cd(word, exe));
 
-	return (_which(word, iteration));
+	return (_which(word, iteration, exe));
 }
 
 /**
@@ -41,11 +42,12 @@ int prompt(char *line, unsigned long int iteration)
  *
  * @line: line of text
  * @iteration: number of the line in execution
+ * @exe: name of the executable shell
  *
  * Return: result of execution
 */
 
-int _which(char *line, unsigned long int iteration)
+int _which(char *line, unsigned long int iteration, char *exe)
 {
 	struct stat st;
 	int exit_stat;
@@ -67,9 +69,9 @@ int _which(char *line, unsigned long int iteration)
 	} while (stat(cpdir, &st) != 0 && dir != NULL);
 
 	if (stat(cpdir, &st) == 0)
-		exit_stat = _exec(cpdir, adr, iteration);
+		exit_stat = _exec(cpdir, adr, iteration, exe);
 	else
-		exit_stat = _exec(command, adr, iteration);
+		exit_stat = _exec(command, adr, iteration, exe);
 	free(duplicate);
 	free(adr);
 	return (exit_stat);
