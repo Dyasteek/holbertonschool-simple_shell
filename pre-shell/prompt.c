@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main(void) {
 
@@ -9,11 +10,23 @@ int main(void) {
 
     buffer = (char *)malloc(bufsize * sizeof(char));
     if (buffer == NULL) {
-        perror("Unable to allocate buffer");
+        perror("Unable buffer");
         exit(1);
     }
 
-    printf("$ ");
-    args = getline(&buffer, &bufsize, stdin);
-    printf("%s", buffer);
+    while (1) {
+        printf("$ ");
+        fflush(stdout);
+        
+        args = getline(&buffer, &bufsize, stdin);
+        
+        if (args == -1 || strcmp(buffer, "end of file\n") == 0 || strcmp(buffer, "EOF\n") == 0) {
+            break;
+        }
+        
+        printf("%s", buffer);
+    }
+
+    free(buffer);
+    return (0);
 }
