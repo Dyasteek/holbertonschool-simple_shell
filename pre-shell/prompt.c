@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 int main(void) {
 
     char *buffer;
     size_t bufsize = 10;
-    size_t args;
+    ssize_t args;
 
     buffer = (char *)malloc(bufsize * sizeof(char));
     if (buffer == NULL) {
@@ -15,18 +16,23 @@ int main(void) {
     }
 
     while (1) {
-        printf("$ ");
-        char *token = strtok(buffer, "\n");
+        printf("nopainNoshell$ ");
+        char* token = strtok(buffer, "\n");
         args = getline(&buffer, &bufsize, stdin);
 
             if (args == -1 || strcmp(buffer, "end of file\n") == 0 || strcmp(buffer, "EOF\n") == 0) {
 				printf("🏃\n");
             break;
         }
-        
-        printf("%s", buffer);
+        if (token != NULL)
+        {
+        printf("%s", token);
+        }
+        else
+        {
+            continue;
+        }
     }
-
     free(buffer);
     return (0);
 }
