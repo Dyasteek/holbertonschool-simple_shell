@@ -1,4 +1,4 @@
-#include "prompt.h"
+#include "shell.h"
 
 /**
  * main - Simple shell prompt that reads and displays commands
