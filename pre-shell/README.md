@@ -10,7 +10,6 @@
     y el PID del proceso padre (<code>getppid()</code>) usando <code>pid_t</code>.
   </li>
   <li>
-    <strong>Trash files:</strong> herramienta básica para mover archivos a la papelera o eliminarlos
-    de manera controlada.
+    <strong>Trash files:</strong> Archvios basura generados por el compilador.
   </li>
 </ul>
