@@ -7,5 +7,4 @@ find . -type f -executable \( -name "*.out" -o -name "a.out" -o -name "prompt" -
 find . -type f -executable ! -name "*.sh" ! -name "*.py" ! -name "*.pl" ! -name "*.rb" ! -name "*.js" ! -name "*.php" ! -name "*.c" ! -name "*.h" ! -name "*.md" ! -name "*.txt" ! -name "*.git*" -delete
 
 echo "Limpieza completada!"
-echo "Archivos ejecutables eliminados:"
-find . -type f -executable 2>/dev/null | wc -l
+echo "Archivos ejecutables eliminados"
