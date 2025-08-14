@@ -16,11 +16,10 @@ int main(void) {
 
     while (1) {
         printf("$ ");
-        fflush(stdout);
-        
+        char *token = strtok(buffer, "\n");
         args = getline(&buffer, &bufsize, stdin);
-        
-        if (args == -1 || strcmp(buffer, "end of file\n") == 0 || strcmp(buffer, "EOF\n") == 0) {
+
+            if (args == -1 || strcmp(buffer, "end of file\n") == 0 || strcmp(buffer, "EOF\n") == 0) {
             break;
         }
         
