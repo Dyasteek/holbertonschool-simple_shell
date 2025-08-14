@@ -20,6 +20,7 @@ int main(void) {
         args = getline(&buffer, &bufsize, stdin);
 
             if (args == -1 || strcmp(buffer, "end of file\n") == 0 || strcmp(buffer, "EOF\n") == 0) {
+				printf("🏃\n");
             break;
         }
         
