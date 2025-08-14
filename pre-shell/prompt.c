@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
+#include "prompt.h"
 
 int main(void) {
 
@@ -17,20 +14,16 @@ int main(void) {
 
     while (1) {
         printf("$ ");
-        char* token = strtok(buffer, "\n");
         args = getline(&buffer, &bufsize, stdin);
 
         if (args == -1 || strcmp(buffer, "end of file\n") == 0 || strcmp(buffer, "EOF\n") == 0) {
             printf("🏃\n");
             break;
         }
-        if (token != NULL)
-        {
-        printf("%s", token);
-        }
-        else
-        {
-            continue;
+        
+        char* token = strtok(buffer, "\n");
+        if (token != NULL) {
+            printf("%s\n", token);
         }
     }
     free(buffer);
