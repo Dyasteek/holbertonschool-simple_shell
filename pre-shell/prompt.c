@@ -1,13 +1,14 @@
 #include "shell.h"
 
 /**
- * main - Simple shell prompt that reads and displays commands
+ * main - Simple shell prompt that reads and executes commands
  *
  * Return: Always 0
  */
 int main(void)
 {
 	char *buffer;
+	char *token;
 	size_t bufsize = 10;
 	ssize_t args;
 
@@ -29,11 +30,11 @@ int main(void)
 			break;
 		}
 
-		char *token = strtok(buffer, "\n");
+		token = strtok(buffer, "\n");
 
 		if (token != NULL)
 		{
-			printf("%s\n", token);
+			exec(token);
 		}
 	}
 	free(buffer);

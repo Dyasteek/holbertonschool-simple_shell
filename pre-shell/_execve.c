@@ -1,13 +1,37 @@
 #include "shell.h"
 
-int
-main(void)
+/**
+ * exec - Execute a command with execve
+ * @command: The command to execute
+ *
+ * Return: Always 0
+ */
+int exec(char *command)
 {
-	char *argv[] = {"/bin/ls", "-l", "/usr/", NULL};
+	pid_t pid;
+	char *argv[2];
 
-	if (execve(argv[0], argv, NULL) == -1)
+	argv[0] = command;
+	argv[1] = NULL;
+
+	pid = fork();
+
+	if (pid == -1)
 	{
-		perror("execve");
+		perror("fork");
+		return (1);
 	}
+
+	if (pid == 0)
+	{
+		if (execve(argv[0], argv, NULL) == -1)
+		{
+			perror("execve");
+			exit(1);
+		}
+	} else {
+		wait(NULL);
+	}
+
 	return (0);
 }
