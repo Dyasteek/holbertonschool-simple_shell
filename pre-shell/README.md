@@ -1,5 +1,13 @@
 <h2>Changelog</h2>
 
+### [V1.3] - 2025-01-27
+### Añadido
+- Función `_getenv()` para obtener variables de entorno del sistema.
+- Implementación de búsqueda de variables de entorno usando `environ`.
+- Comparación de strings con `strncmp()` para encontrar variables específicas.
+- Manejo de casos edge: verificación de `name` y `environ` NULL.
+- Retorno del valor de la variable de entorno (sin el nombre y el '=').
+
 ### [V1.2] - 2025-08-15
 ### Añadido
 - Nueva función `exec()` que implementa `fork()` y `execve()` para ejecutar programas externos.
