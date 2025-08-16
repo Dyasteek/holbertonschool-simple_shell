@@ -1,36 +1,36 @@
 <h2>Changelog</h2>
 
 ### [V1.3] - 2025-01-27
-### Añadido
-- Función `_getenv()` para obtener variables de entorno del sistema.
-- Implementación de búsqueda de variables de entorno usando `environ`.
-- Comparación de strings con `strncmp()` para encontrar variables específicas.
-- Manejo de casos edge: verificación de `name` y `environ` NULL.
-- Retorno del valor de la variable de entorno (sin el nombre y el '=').
+### Added
+- `_getenv()` function to retrieve system environment variables.
+- Environment variable search implementation using `environ`.
+- String comparison with `strncmp()` to find specific variables.
+- Edge case handling: verification of `name` and `environ` NULL.
+- Return of environment variable value (without name and '=').
 
 ### [V1.2] - 2025-08-15
-### Añadido
-- Nueva función `exec()` que implementa `fork()` y `execve()` para ejecutar programas externos.
-- Ejecución de comandos con rutas absolutas.
-- Tokenización mejorada: `strtok()` elimina el salto de línea antes de ejecutar.
-- Múltiples palabras clave para salir: `EOF`, `exit`, `end of file`.
-- Uso de `pid_t` para manejo de procesos hijo/padre.
-- Espera de procesos hijos con `wait(NULL)` para evitar procesos zombies.
+### Added
+- New `exec()` function that implements `fork()` and `execve()` to execute external programs.
+- Command execution with absolute paths.
+- Improved tokenization: `strtok()` removes newline before execution.
+- Multiple exit keywords: `EOF`, `exit`, `end of file`.
+- Use of `pid_t` for child/parent process handling.
+- Child process waiting with `wait(NULL)` to avoid zombie processes.
 
 ### [V1.1] - 2025-08-14
-### Añadido
-- Bucle principal que muestra un prompt `$` y lee comandos desde la entrada estándar.
-- Lectura de entrada con `getline()` y buffer dinámico inicial de 10 bytes.
-- Eliminación del salto de línea usando `strtok()`.
-- Condiciones de salida:
-  - Entrada `end of file`
-  - Entrada `EOF`
-  - Fin de flujo (`args == -1`)
-- Mensaje de salida con emoji 🏃 al cerrar el shell.
-- Liberación de memoria asignada antes de salir.
+### Added
+- Main loop that displays a `$` prompt and reads commands from standard input.
+- Input reading with `getline()` and initial dynamic buffer of 10 bytes.
+- Newline removal using `strtok()`.
+- Exit conditions:
+  - `end of file` input
+  - `EOF` input
+  - End of stream (`args == -1`)
+- Exit message with 🏃 emoji when closing the shell.
+- Memory deallocation before exit.
 
 ### [V1.0] - 2025-08-14
-### Añadido
-- shell_start: sScript con prompt interactivo, lectura de entrada y muestra de argumentos recibidos (pruebas de comandos simples).
-- pid_script: Imprime el PID actual (`getpid()`) y el PID del proceso padre (`getppid()`) usando `pid_t`.
-- trash files: eliminación de archivos basura generados por el compilador.
+### Added
+- shell_start: Script with interactive prompt, input reading and display of received arguments (simple command tests).
+- pid_script: Prints current PID (`getpid()`) and parent process PID (`getppid()`) using `pid_t`.
+- trash files: removal of compiler-generated garbage files.
