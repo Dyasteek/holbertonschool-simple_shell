@@ -11,6 +11,7 @@ int main(void)
 	char *token;
 	size_t bufsize = 10;
 	ssize_t args;
+	char *saveptr;
 
 	buffer = (char *)malloc(bufsize * sizeof(char));
 	if (buffer == NULL)
@@ -29,13 +30,15 @@ int main(void)
 			printf("🏃\n");
 			break;
 		}
-
-		token = strtok(buffer, "\n");
+		
+		const char *delimiters = " \n\t";
+		token = strtok_r(buffer, delimiters, &saveptr);
 
 		if (token != NULL)
 		{
 			exec(token);
 		}
+		token = strtok_r(NULL, delimiters, &saveptr);
 	}
 	free(buffer);
 	return (0);
