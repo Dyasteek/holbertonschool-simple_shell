@@ -35,7 +35,6 @@ int main(void)
 		if (token != NULL)
 		{
 			exec(token);
-			token = strtok(NULL, delimiters);
 		}
 	}
 	free(buffer);

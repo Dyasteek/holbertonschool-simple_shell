@@ -27,6 +27,8 @@ int exec(char *command)
 		if (execve(argv[0], argv, NULL) == -1)
 		{
 			perror("shell");
+			free(argv[0]);
+			free(argv[1]);
 			exit(1);
 		}
 	} else {
