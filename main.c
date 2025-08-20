@@ -18,7 +18,7 @@ int main(void)
 
 	while (1)
 	{
-		printf("$ ");
+		printf("shellyBean$: ");
 		fflush(stdout);
 		args = getline(&buffer, &bufsize, stdin);
 
