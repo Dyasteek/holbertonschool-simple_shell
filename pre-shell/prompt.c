@@ -9,20 +9,17 @@ int main(void)
 {
 	char *buffer;
 	char *token;
-	size_t bufsize = 10;
+	size_t bufsize = 0;
 	ssize_t args;
+	int line = 1;
 	const char *delimiters = " \n\t";
 
-	buffer = (char *)malloc(bufsize * sizeof(char));
-	if (buffer == NULL)
-	{
-		perror("Unable buffer");
-		exit(1);
-	}
+	buffer = NULL;
 
 	while (1)
 	{
 		printf("$ ");
+		fflush(stdout);
 		args = getline(&buffer, &bufsize, stdin);
 
 		if (args == -1 || strcmp(buffer, "end of file\n") == 0 || strcmp(buffer, "EOF\n") == 0 || strcmp(buffer, "eof\n") == 0 || strcmp(buffer, "exit\n") == 0)
@@ -34,8 +31,9 @@ int main(void)
 		token = strtok(buffer, delimiters);
 		if (token != NULL)
 		{
-			exec(token);
+			exec(token, line, buffer);
 		}
+		line++;
 	}
 	free(buffer);
 	return (0);
