@@ -14,6 +14,7 @@ int exec(char *command, int line, char *buffer);
 char *_getenv( const char *name);
 char *tokenizer(char *command, char *argv[]);
 void chilito(char *argv[], int line, char *command, char *buffer, char *command2);
+void print_env(char *token);
 
 /* environment */
 extern char **environ;

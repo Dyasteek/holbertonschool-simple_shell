@@ -31,7 +31,14 @@ int main(void)
 		token = strtok(buffer, delimiters);
 		if (token != NULL)
 		{
-			exec(token, line, buffer);
+			if (strcmp(token, "env") == 0)
+    		{
+        		print_env(token);
+    		}
+    		else
+    		{
+        		exec(token, line, buffer);
+			}
 		}
 		line++;
 	}
