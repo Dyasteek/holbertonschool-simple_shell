@@ -1,0 +1,74 @@
+.TH man 1 "AUG 20 2025" "Holberton Simple Shell"
+
+.SH NAME
+    shellyBean - Holberton Simple Shell: command line interpreter
+
+.SH SYNOPSIS
+shellyBean
+
+.SH DESCRIPTION
+    .B shellyBean
+    is a basic command line interpreter that reads and executes commands from user input,
+    functioning similarly to a shell.
+.PP
+    .B shellyBean
+    is compiled on Ubuntu 24.04 LTS with gcc and runs in interactive mode only.
+.PP
+.SH USER INPUT
+    When a user enters a command and presses Enter, the shell performs the following actions:
+
+    1. Displays a prompt (shellyBean$) and waits for user input.
+    2. Reads the command using getline().
+    3. Tokenizes the command into arguments using strtok() with delimiters: space, newline, tab.
+    4. Checks if the command is a built-in command.
+    5. If not built-in, executes the command using fork() and execve() with absolute path.
+.PP
+.SH BUILT-IN COMMANDS
+    .IP env
+    Displays the PATH environment variable.
+    .IP exit
+    Terminates the shell process and frees allocated memory.
+    .IP end of file
+    Alternative exit command that terminates the shell.
+    .IP EOF
+    Alternative exit command that terminates the shell.
+    .IP eof
+    Alternative exit command that terminates the shell.
+.PP
+.SH EXTERNAL COMMANDS
+    The shell can execute external commands that are specified with their full path (e.g., /bin/ls).
+    Commands must be provided with their complete path as the shell does not search in PATH.
+.PP
+.SH ERROR HANDLING
+    When a command is not found, the shell displays an error message in the format:
+    "shell: [line_number]: [command]: not found"
+.PP
+.SH MEMORY MANAGEMENT
+    The shell manages memory allocation and deallocation:
+    - Uses malloc() for dynamic memory allocation
+    - Frees allocated memory before normal exit
+    - Frees memory in child process on execution errors
+.PP
+.SH SIGNAL HANDLING
+    The shell can be terminated using Ctrl+C (SIGINT).
+    When terminated abruptly, some memory may remain allocated.
+.PP
+.SH EXIT CODES
+    - 0: Successful execution
+    - 1: Command not found or execution error
+.PP
+.SH LIMITATIONS
+    - Maximum of 1024 arguments per command
+    - Only supports interactive mode
+    - Commands must be specified with full path
+    - Limited built-in command support
+.PP
+.SH AUTHORS
+    .PP
+    Andres del Rio - https://github.com/dyasteek
+    .PP
+    Erick Gaiero - https://github.com/ErickGaiero
+    .PP
+    Holberton School Project
+
+    
