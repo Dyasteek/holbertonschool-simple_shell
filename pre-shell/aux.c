@@ -54,17 +54,10 @@ void chilito(char *argv[], int line, char *command, char *buffer,
 	}
 }
 
-void print_env(char *token)
+void print_env(void)
 {				
-    char *path;
-
-    if (token == NULL)
-        return;
-
-    if (strcmp(token, "env") == 0)
-    {
-        path = _getenv("PATH");
-        if (path)
+    char *path = _getenv("PATH");
+        
+		if (path)
             printf("PATH=%s\n", path);
-    }
 }

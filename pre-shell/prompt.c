@@ -7,12 +7,10 @@
  */
 int main(void)
 {
-	char *buffer;
-	char *token;
+	char *buffer, *cp, *argv[1024];
 	size_t bufsize = 0;
 	ssize_t args;
 	int line = 1;
-	const char *delimiters = " \n\t";
 
 	buffer = NULL;
 
@@ -28,19 +26,20 @@ int main(void)
 			break;
 		}
 
-		token = strtok(buffer, delimiters);
-		if (token != NULL)
+		cp = tokenizer(buffer, argv);
+		if (argv[0] != NULL)
 		{
-			if (strcmp(token, "env") == 0)
+			if (strcmp(argv[0], "env") == 0)
     		{
-        		print_env(token);
+        		print_env();
     		}
     		else
     		{
-        		exec(token, line, buffer);
+            		exec(argv, line, buffer);
 			}
-		}
+		free(cp);
 		line++;
+		}
 	}
 	free(buffer);
 	return (0);
