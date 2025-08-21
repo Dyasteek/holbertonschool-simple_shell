@@ -46,10 +46,18 @@ void chilito(char *argv[], int line, char *command, char *buffer,
 {
 	if (execve(argv[0], argv, environ) == -1)
 	{
-		printf("shell: %d: %s: not found\n", line, command);
+		printf("maicol: %d: %s: not found\n", line, command);
 		free(command2);
 		free(buffer);
 		fflush(stdout);
 		_exit(1);
 	}
+}
+
+void print_env(void)
+{				
+    char *path = _getenv("PATH");
+        
+		if (path)
+            printf("PATH=%s\n", path);
 }

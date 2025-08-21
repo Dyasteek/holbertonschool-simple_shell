@@ -7,18 +7,16 @@
  */
 int main(void)
 {
-	char *buffer;
-	char *token;
+	char *buffer, *cp, *argv[1024];
 	size_t bufsize = 0;
 	ssize_t args;
 	int line = 1;
-	const char *delimiters = " \n\t";
 
 	buffer = NULL;
 
 	while (1)
 	{
-		printf("shellyBean$: ");
+		printf("maicolyeiston$ ");
 		fflush(stdout);
 		args = getline(&buffer, &bufsize, stdin);
 
@@ -28,12 +26,20 @@ int main(void)
 			break;
 		}
 
-		token = strtok(buffer, delimiters);
-		if (token != NULL)
+		cp = tokenizer(buffer, argv);
+		if (argv[0] != NULL)
 		{
-			exec(token, line, buffer);
-		}
+			if (strcmp(argv[0], "env") == 0)
+    		{
+        		print_env();
+    		}
+    		else
+    		{
+            		exec(argv, line, buffer);
+			}
+		free(cp);
 		line++;
+		}
 	}
 	free(buffer);
 	return (0);
