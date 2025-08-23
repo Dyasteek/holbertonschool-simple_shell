@@ -16,6 +16,8 @@ char *tokenizer(char *command, char *argv[]);
 void chilito(char *argv[], int line, char *command, char *buffer,
 		char *command2);
 void print_env(void);
+char *commandfinder(char *command);
+char *pathfinder(char *command);
 
 /* environment */
 extern char **environ;

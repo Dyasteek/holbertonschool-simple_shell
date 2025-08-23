@@ -17,11 +17,10 @@ int main(void)
 
 	while (1)
 	{
-
 		if (interactive)
 		{
-		printf("maicolyeiston$ ");
-		fflush(stdout);
+			printf("maicolyeiston$ ");
+			fflush(stdout);
 		}
 
 		args = getline(&buffer, &bufsize, stdin);
@@ -31,8 +30,7 @@ int main(void)
 			strcmp(buffer, "exit\n") == 0)
 		{
 			if (interactive)
-			printf("🏃\n");
-			
+				printf("🏃\n");
 			break;
 		}
 
