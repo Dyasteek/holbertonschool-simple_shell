@@ -23,14 +23,16 @@ int main(void)
 		printf("maicolyeiston$ ");
 		fflush(stdout);
 		}
-		
+
 		args = getline(&buffer, &bufsize, stdin);
 
 		if (args == -1 || strcmp(buffer, "end of file\n") == 0 ||
 			strcmp(buffer, "EOF\n") == 0 || strcmp(buffer, "eof\n") == 0 ||
 			strcmp(buffer, "exit\n") == 0)
 		{
+			if (interactive)
 			printf("🏃\n");
+			
 			break;
 		}
 
