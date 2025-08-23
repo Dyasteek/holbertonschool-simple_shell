@@ -16,13 +16,11 @@ int exec(char *argv[], int line, char *buffer)
 	if (!argv[0])
 		return (0);
 
-	/* Store original command for error message */
 	original_cmd = malloc(strlen(argv[0]) + 1);
 	if (!original_cmd)
 		return (1);
 	strcpy(original_cmd, argv[0]);
 
-	/* Find the command in PATH or check if absolute path exists */
 	full_path = commandfinder(argv[0]);
 	if (!full_path)
 	{
@@ -31,10 +29,8 @@ int exec(char *argv[], int line, char *buffer)
 		return (1);
 	}
 
-	/* Store the allocated path for later cleanup */
 	allocated_path = full_path;
 
-	/* Replace argv[0] with the full path */
 	argv[0] = full_path;
 
 	pid = fork();

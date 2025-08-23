@@ -1,0 +1,207 @@
+===============================================================================
+                    FLUJO COMPLETO DEL SIMPLE SHELL 0.2+
+===============================================================================
+
+Este documento explica paso a paso cómo funciona el shell, desde que el usuario
+escribe un comando hasta que se ejecuta o se muestra un error.
+
+===============================================================================
+1. INICIO DEL PROGRAMA - main.c
+===============================================================================
+
+FUNCIÓN: main()
+PROPÓSITO: Loop principal del shell
+
+FLUJO:
+1. Declara variables: buffer, argv[1024], line = 1
+2. Entra en loop infinito while(1)
+3. Muestra prompt: "maicolyeiston$ "
+4. Lee comando con getline(&buffer, &bufsize, stdin)
+5. Verifica si es comando de salida (exit, EOF, etc.)
+6. Si es comando de salida → imprime "🏃" y break
+7. Si no, llama a tokenizer(buffer, argv)
+8. Si argv[0] no es NULL:
+   - Si argv[0] == "env" → llama print_env()
+   - Si no → llama exec(argv, line, buffer)
+9. Libera memoria: free(cp), line++
+10. Al salir del loop: free(buffer)
+
+===============================================================================
+2. PROCESAMIENTO DE COMANDOS - aux.c
+===============================================================================
+
+FUNCIÓN: tokenizer(char *command, char *argv[])
+PROPÓSITO: Divide el comando en argumentos
+
+FLUJO:
+1. Alloca memoria: command2 = malloc(strlen(command) + 1)
+2. Copia comando: strcpy(command2, command)
+3. Usa strtok para dividir por espacios, tabs, newlines
+4. Guarda cada token en argv[i]
+5. Termina argv con NULL
+6. Retorna command2 (para liberar después)
+
+FUNCIÓN: print_env()
+PROPÓSITO: Muestra variables de entorno
+
+FLUJO:
+1. Obtiene PATH con _getenv("PATH")
+2. Si existe → imprime "PATH=valor"
+3. Si no existe → no hace nada
+
+===============================================================================
+3. BÚSQUEDA DE COMANDOS - aux.c
+===============================================================================
+
+FUNCIÓN: commandfinder(char *command)
+PROPÓSITO: Coordinador principal para encontrar comandos
+
+FLUJO:
+1. Verifica si es ruta absoluta (empieza con "/")
+   - Si SÍ → verifica con access(command, X_OK)
+   - Si existe → alloca memoria y copia comando
+   - Si no existe → retorna NULL
+
+2. Verifica si es ruta relativa (empieza con "./" o "../")
+   - Si SÍ → verifica con access(command, X_OK)
+   - Si existe → alloca memoria y copia comando
+   - Si no existe → retorna NULL
+
+3. Si no es ruta absoluta ni relativa:
+   - Llama pathfinder(command) para buscar en PATH
+
+FUNCIÓN: pathfinder(char *command)
+PROPÓSITO: Busca comando en directorios del PATH
+
+FLUJO:
+1. Obtiene PATH con _getenv("PATH")
+2. Si no existe PATH → retorna NULL
+3. Alloca memoria: cpy_path = malloc(strlen(path_env) + 1)
+4. Copia PATH: strcpy(cpy_path, path_env)
+5. current = cpy_path
+
+6. Entra en loop while(*current):
+   a) parser = strchr(current, ':')  // Busca delimitador
+   b) Si encuentra ':' → *parser = '\0'  // Corta temporalmente
+   c) path_len = strlen(current)
+   d) cmd_len = strlen(command)
+   e) full_path = malloc(path_len + cmd_len + 2)
+   f) Construye path: strcpy + strcat + strcat
+   g) Verifica: access(full_path, X_OK)
+   h) Si existe → free(cpy_path), return full_path
+   i) Si no existe → free(full_path)
+   j) Si había ':' → restaura '*parser = ':'', avanza current
+   k) Si no había ':' → break
+
+7. Si no encontró → free(cpy_path), return NULL
+
+===============================================================================
+4. EJECUCIÓN DE COMANDOS - _execve.c
+===============================================================================
+
+FUNCIÓN: exec(char *argv[], int line, char *buffer)
+PROPÓSITO: Ejecuta comandos con fork y execve
+
+FLUJO:
+1. Si argv[0] es NULL → return 0
+2. Copia comando original: original_cmd = malloc + strcpy
+3. Busca comando: full_path = commandfinder(argv[0])
+4. Si no encuentra comando:
+   - Imprime: "maicol: line: comando: not found"
+   - free(original_cmd)
+   - return 1
+
+5. Si encuentra comando:
+   - allocated_path = full_path  // Guarda referencia
+   - argv[0] = full_path  // Reemplaza con path completo
+   - pid = fork()
+
+6. Si fork falla:
+   - perror("fork")
+   - free(original_cmd)
+   - free(allocated_path)
+   - return 1
+
+7. Si fork exitoso:
+   - Proceso hijo: chilito(argv, line, original_cmd, buffer, original_cmd)
+   - Proceso padre: wait(NULL), free(original_cmd), free(allocated_path)
+
+FUNCIÓN: chilito(char *argv[], int line, char *command, char *buffer, char *command2)
+PROPÓSITO: Ejecuta en proceso hijo
+
+FLUJO:
+1. Llama execve(argv[0], argv, environ)
+2. Si execve falla:
+   - Imprime: "maicol: line: comando: not found"
+   - Si command2 != buffer → free(command2)
+   - free(buffer)
+   - _exit(1)
+
+===============================================================================
+5. UTILIDADES - _getenv.c
+===============================================================================
+
+FUNCIÓN: _getenv(const char *name)
+PROPÓSITO: Obtiene valor de variable de entorno
+
+FLUJO:
+1. Si name es NULL o environ es NULL → return NULL
+2. len = strlen(name)
+3. Itera por environ[i]:
+   - Si strncmp(env, name, len) == 0 && env[len] == '='
+   - Retorna env + len + 1 (valor después del '=')
+4. Si no encuentra → return NULL
+
+===============================================================================
+6. FLUJO DE MEMORIA
+===============================================================================
+
+ALLOCACIONES:
+- main(): buffer (getline), cp (tokenizer)
+- exec(): original_cmd, allocated_path
+- commandfinder(): cpy_path (para rutas absolutas/relativas)
+- pathfinder(): cpy_path, full_path
+- tokenizer(): command2
+
+LIBERACIONES:
+- main(): free(cp) en cada iteración, free(buffer) al salir
+- exec(): free(original_cmd), free(allocated_path) en proceso padre
+- pathfinder(): free(cpy_path) al encontrar o al final
+- chilito(): free(command2), free(buffer) si execve falla
+
+===============================================================================
+7. CASOS DE USO
+===============================================================================
+
+CASO 1: Comando que existe en PATH
+Usuario: "ls"
+Flujo: main → tokenizer → exec → commandfinder → pathfinder → fork → chilito → execve
+
+CASO 2: Comando que NO existe
+Usuario: "comando_inexistente"
+Flujo: main → tokenizer → exec → commandfinder → pathfinder → error → "not found"
+
+CASO 3: Ruta absoluta
+Usuario: "/bin/ls"
+Flujo: main → tokenizer → exec → commandfinder (ruta absoluta) → fork → chilito → execve
+
+CASO 4: Comando built-in
+Usuario: "env"
+Flujo: main → tokenizer → print_env → imprime PATH
+
+CASO 5: Comando de salida
+Usuario: "exit"
+Flujo: main → detecta comando de salida → imprime "🏃" → break
+
+===============================================================================
+8. PUNTOS CLAVE
+===============================================================================
+
+✅ VERIFICACIÓN PREVIA: Solo se llama fork() si el comando existe
+✅ MANEJO DEL PATH: Búsqueda automática en directorios del sistema
+✅ SIN MEMORY LEAKS: Liberación correcta de toda la memoria
+✅ MANEJO DE ERRORES: Mensajes claros sin ejecutar procesos innecesarios
+✅ FUNCIONES PERMITIDAS: Solo uso de funciones oficiales del proyecto
+✅ ESTILO BETTY: Código siguiendo estándares de Holberton
+
+===============================================================================
