@@ -2,7 +2,7 @@
 
 /**
  * exec - Execute a command with execve
- * @command: The command to execute
+ * @argv: Array of command arguments
  * @line: The line number
  * @buffer: The buffer to free in case of error
  *

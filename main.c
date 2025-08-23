@@ -20,7 +20,9 @@ int main(void)
 		fflush(stdout);
 		args = getline(&buffer, &bufsize, stdin);
 
-		if (args == -1 || strcmp(buffer, "end of file\n") == 0 || strcmp(buffer, "EOF\n") == 0 || strcmp(buffer, "eof\n") == 0 || strcmp(buffer, "exit\n") == 0)
+		if (args == -1 || strcmp(buffer, "end of file\n") == 0 ||
+			strcmp(buffer, "EOF\n") == 0 || strcmp(buffer, "eof\n") == 0 ||
+			strcmp(buffer, "exit\n") == 0)
 		{
 			printf("🏃\n");
 			break;
@@ -30,15 +32,15 @@ int main(void)
 		if (argv[0] != NULL)
 		{
 			if (strcmp(argv[0], "env") == 0)
-    		{
-        		print_env();
-    		}
-    		else
-    		{
-            		exec(argv, line, buffer);
+			{
+				print_env();
 			}
-		free(cp);
-		line++;
+			else
+			{
+				exec(argv, line, buffer);
+			}
+			free(cp);
+			line++;
 		}
 	}
 	free(buffer);

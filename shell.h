@@ -11,15 +11,21 @@
 
 /* functions */
 int exec(char *argv[], int line, char *buffer);
-char *_getenv( const char *name);
+char *_getenv(const char *name);
 char *tokenizer(char *command, char *argv[]);
-void chilito(char *argv[], int line, char *command, char *buffer, char *command2);
+void chilito(char *argv[], int line, char *command, char *buffer,
+		char *command2);
 void print_env(void);
 
 /* environment */
 extern char **environ;
 
 /* structs */
+/**
+ * struct path_node - Node structure for path linked list
+ * @str: String containing path
+ * @next: Pointer to next node
+ */
 typedef struct path_node
 {
 	char *str;
