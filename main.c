@@ -11,13 +11,19 @@ int main(void)
 	size_t bufsize = 0;
 	ssize_t args;
 	int line = 1;
+	int interactive = isatty(STDIN_FILENO);
 
 	buffer = NULL;
 
 	while (1)
 	{
+
+		if (interactive)
+		{
 		printf("maicolyeiston$ ");
 		fflush(stdout);
+		}
+		
 		args = getline(&buffer, &bufsize, stdin);
 
 		if (args == -1 || strcmp(buffer, "end of file\n") == 0 ||
