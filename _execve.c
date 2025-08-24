@@ -1,35 +1,49 @@
 #include "shell.h"
 
 /**
- * exec - Execute a command with execve
+ * commandprep - Prepare command for execution
  * @argv: Array of command arguments
  * @line: The line number
- * @buffer: The buffer to free in case of error
+ * @original_cmd: Pointer to store original command
  *
- * Return: Always 0
+ * Return: Full path if found, NULL if not found
  */
-int exec(char *argv[], int line, char *buffer)
+char *commandprep(char *argv[], int line, char **original_cmd)
 {
-	pid_t pid;
-	char *full_path, *original_cmd, *allocated_path;
+	char *full_path;
 
 	if (!argv[0])
-		return (0);
+		return (NULL);
 
-	original_cmd = malloc(strlen(argv[0]) + 1);
-	if (!original_cmd)
-		return (1);
-	strcpy(original_cmd, argv[0]);
+	*original_cmd = malloc(strlen(argv[0]) + 1);
+	if (!*original_cmd)
+		return (NULL);
+	strcpy(*original_cmd, argv[0]);
 
 	full_path = commandfinder(argv[0]);
 	if (!full_path)
 	{
-		printf("maicol: %d: %s: not found\n", line, original_cmd);
-		free(original_cmd);
-		return (1);
+		printf("maicol: %d: %s: not found\n", line, *original_cmd);
+		free(*original_cmd);
+		return (NULL);
 	}
 
-	allocated_path = full_path;
+	return (full_path);
+}
+
+/**
+ * forker - Execute command with fork and execve
+ * @argv: Array of arguments
+ * @line: Line number
+ * @buffer: Buffer to free
+ * @full_path: Full path to command
+ * @original_cmd: Original command for error messages
+ *
+ * Return: 0 on success, 1 on error
+ */
+int forker(char *argv[], int line, char *buffer, char *full_path, char *original_cmd)
+{
+	pid_t pid;
 
 	argv[0] = full_path;
 
@@ -38,7 +52,6 @@ int exec(char *argv[], int line, char *buffer)
 	{
 		perror("fork");
 		free(original_cmd);
-		free(allocated_path);
 		return (1);
 	}
 
@@ -50,7 +63,25 @@ int exec(char *argv[], int line, char *buffer)
 	{
 		wait(NULL);
 		free(original_cmd);
-		free(allocated_path);
 	}
 	return (0);
+}
+
+/**
+ * exec - Execute a command with execve
+ * @argv: Array of command arguments
+ * @line: The line number
+ * @buffer: The buffer to free in case of error
+ *
+ * Return: Always 0
+ */
+int exec(char *argv[], int line, char *buffer)
+{
+	char *full_path, *original_cmd;
+
+	full_path = commandprep(argv, line, &original_cmd);
+	if (!full_path)
+		return (1);
+
+	return (forker(argv, line, buffer, full_path, original_cmd));
 }

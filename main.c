@@ -1,13 +1,45 @@
 #include "shell.h"
 
 /**
+ * process_command - Process a single command
+ * @argv: Array of command arguments
+ * @line: Line number
+ * @buffer: Buffer containing the command
+ *
+ * Return: 0 on success, 1 on error
+ */
+int process_command(char *argv[], int line, char *buffer)
+{
+	char *cp;
+
+	cp = tokenizer(buffer, argv);
+	if (cp != NULL)
+	{
+		if (argv[0] != NULL)
+		{
+			if (strcmp(argv[0], "env") == 0)
+			{
+				print_env();
+			}
+			else
+			{
+				exec(argv, line, buffer);
+			}
+		}
+		free(cp);
+		return (0);
+	}
+	return (1);
+}
+
+/**
  * main - Simple shell prompt that reads and executes commands
  *
  * Return: Always 0
  */
 int main(void)
 {
-	char *buffer, *cp, *argv[1024];
+	char *buffer, *argv[1024];
 	size_t bufsize = 0;
 	ssize_t args;
 	int line = 1;
@@ -41,23 +73,8 @@ int main(void)
 			break;
 		}
 
-		cp = tokenizer(buffer, argv);
-		if (cp != NULL)
-		{
-			if (argv[0] != NULL)
-			{
-				if (strcmp(argv[0], "env") == 0)
-				{
-					print_env();
-				}
-				else
-				{
-					exec(argv, line, buffer);
-				}
-				line++;
-			}
-			free(cp);
-		}
+		process_command(argv, line, buffer);
+		line++;
 	}
 	free(buffer);
 	return (0);
