@@ -48,8 +48,7 @@ void chilito(char *argv[], int line, char *command, char *buffer,
 	{
 		printf("maicol: %d: %s: not found\n", line, command);
 		fflush(stdout);
-		if (command2 != buffer)
-			free(command2);
+		free(command2);
 		free(buffer);
 		_exit(1);
 	}

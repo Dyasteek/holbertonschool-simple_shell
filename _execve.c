@@ -52,17 +52,19 @@ int forker(char *argv[], int line, char *buffer, char *full_path, char *original
 	{
 		perror("fork");
 		free(original_cmd);
+		free(full_path);
 		return (1);
 	}
 
 	if (pid == 0)
 	{
-		chilito(argv, line, original_cmd, buffer, original_cmd);
+		chilito(argv, line, original_cmd, buffer, NULL);
 	}
 	else
 	{
 		wait(NULL);
 		free(original_cmd);
+		free(full_path);
 	}
 	return (0);
 }

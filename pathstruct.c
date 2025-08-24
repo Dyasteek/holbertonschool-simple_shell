@@ -81,7 +81,9 @@ char *pathfinder(char *command)
 
 		full_path = pathchecker(current, command, cpy_path);
 		if (full_path)
+		{
 			return (full_path);
+		}
 
 		if (parser)
 		{
