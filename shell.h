@@ -18,10 +18,10 @@ char *tokenizer(char *command, char *argv[]);
 int exec(char *argv[], int line, char *buffer);
 char *pathbuilder(char *current, char *command);
 int process_command(char *argv[], int line, char *buffer);
-char *commandprep(char *argv[], int line, char **original_cmd);
+char *commandprep(char *argv[], int line, char **cmdo);
 char *pathchecker(char *current, char *command, char *cpy_path);
-int forker(char *argv[], int line, char *buffer, char *full_path, char *original_cmd);
-void chilito(char *argv[], int line, char *command, char *buffer, char *command2);
+int forker(char *argv[], int line, char *buffer, char *full_path, char *cmdo);
+void chilito(char *argv[], int line, char *command, char *buffer, char *cmd2);
 
 /* environment */
 extern char **environ;

@@ -11,16 +11,16 @@ char *tokenizer(char *command, char *argv[])
 {
 	int i = 0;
 	char *token;
-	char *command2;
+	char *cmd2;
 
-	command2 = malloc(strlen(command) + 1);
-	if (command2 == NULL)
+	cmd2 = malloc(strlen(command) + 1);
+	if (cmd2 == NULL)
 	{
 		perror("malloc");
 		return (NULL);
 	}
-	strcpy(command2, command);
-	token = strtok(command2, " \n\t");
+	strcpy(cmd2, command);
+	token = strtok(cmd2, " \n\t");
 	while (token != NULL && i < 1023)
 	{
 		argv[i] = token;
@@ -28,7 +28,7 @@ char *tokenizer(char *command, char *argv[])
 		token = strtok(NULL, " \n\t");
 	}
 	argv[i] = NULL;
-	return (command2);
+	return (cmd2);
 }
 
 /**
@@ -37,18 +37,18 @@ char *tokenizer(char *command, char *argv[])
  * @line: Line number
  * @command: Original command
  * @buffer: Buffer to free
- * @command2: Command copy to free
+ * @cmd2: Command copy to free
  *
  * Return: void
  */
 void chilito(char *argv[], int line, char *command, char *buffer,
-		char *command2)
+		char *cmd2)
 {
 	if (execve(argv[0], argv, environ) == -1)
 	{
 		printf("maicol: %d: %s: not found\n", line, command);
 		fflush(stdout);
-		free(command2);
+		free(cmd2);
 		free(buffer);
 		_exit(1);
 	}
