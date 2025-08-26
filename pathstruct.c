@@ -135,5 +135,17 @@ char *commandfinder(char *command)
 		return (NULL);
 	}
 
+	if (strlen(_getenv("PATH")) == 0)
+	{
+		if (access(command, X_OK) == 0)
+		{
+			char *cpy_path = malloc(strlen(command) + 1);
+			if (cpy_path)
+				strcpy(cpy_path, command);
+			return (cpy_path);
+		}
+		return (NULL);
+	}
+
 	return (pathfinder(command));
 }
