@@ -79,7 +79,9 @@ void _env(void)
  */
 void _exit_shell(void)
 {
-	exit(0);
+	fflush(stdout);
+	fflush(stderr);
+	_exit(0);
 }
 
 /**
