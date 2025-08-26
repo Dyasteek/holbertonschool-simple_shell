@@ -19,7 +19,11 @@ int process_command(char *argv[], int line, char *buffer)
 		{
 			if (strcmp(argv[0], "env") == 0)
 			{
-				print_env();
+				_env();
+			}
+			else if (strcmp(argv[0], "exit") == 0)
+			{
+				_exit_shell();
 			}
 			else
 			{
@@ -65,8 +69,7 @@ int main(void)
 		}
 
 		if (strcmp(buffer, "end of file\n") == 0 ||
-			strcmp(buffer, "EOF\n") == 0 || strcmp(buffer, "eof\n") == 0 ||
-			strcmp(buffer, "exit\n") == 0)
+			strcmp(buffer, "EOF\n") == 0 || strcmp(buffer, "eof\n") == 0)
 		{
 			if (interactive)
 				printf("🏃\n");

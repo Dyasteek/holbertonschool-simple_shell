@@ -10,7 +10,9 @@
 #include <sys/types.h>
 
 /* functions */
+void _env(void);
 void print_env(void);
+void _exit_shell(void);
 char *pathfinder(char *command);
 char *_getenv(const char *name);
 char *commandfinder(char *command);

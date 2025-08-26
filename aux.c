@@ -55,6 +55,34 @@ void chilito(char *argv[], int line, char *command, char *buffer,
 }
 
 /**
+ * _env - Print all environment variables
+ *
+ * Return: void
+ */
+void _env(void)
+{
+	int i = 0;
+
+	while (environ[i])
+	{
+		printf("%s\n", environ[i]);
+		i++;
+	}
+}
+
+
+
+/**
+ * _exit_shell - Exit the shell
+ *
+ * Return: void
+ */
+void _exit_shell(void)
+{
+	exit(0);
+}
+
+/**
  * print_env - Print the PATH environment variable
  *
  * Return: void
